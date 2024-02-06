@@ -1,2 +1,2 @@
 "use strict";
-const test = "sf";
+console.log("index js start");

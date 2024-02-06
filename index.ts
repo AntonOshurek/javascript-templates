@@ -1,1 +1,1 @@
-const test: string = "sf";
+console.log("index js start");
