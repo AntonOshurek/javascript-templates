@@ -36,3 +36,17 @@ export const findMinMaxValueFromArray = (
 const result = findMinMaxValueFromArray(numbersArray);
 console.log("Минимальное число:", result.min);
 console.log("Максимальное число:", result.max);
+
+// находим второе значение по убыванию
+const findSecondLargest = (arr: number[]): number | string => {
+  if (arr.length < 2) {
+    return "Массив должен содержать как минимум два элемента.";
+  }
+  let sortedArray = arr.sort((a, b) => b - a);
+  let secondLargest = sortedArray[1];
+  return secondLargest;
+};
+console.log(
+  "Предпоследнее от большого число:",
+  findSecondLargest(numbersArray)
+);
