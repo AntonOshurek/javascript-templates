@@ -91,3 +91,21 @@ const findCommonValues = <T>(arr1: T[], arr2: T[]): T[] => {
   return arr1.filter((value) => arr2.includes(value));
 };
 console.log(findCommonValues(array1, array4));
+
+// развернуть все внутренние массивы в один плоский массив
+const flattenArray = <T>(arr: T[]): (T | undefined)[] => {
+  const stack = [...arr];
+  const result = [];
+
+  while (stack.length) {
+    const element = stack.pop();
+    if (Array.isArray(element)) {
+      stack.push(...element);
+    } else {
+      result.unshift(element);
+    }
+  }
+  return result;
+};
+const nestedArray = [1, [2, [3, 4], 5], 6];
+console.log(flattenArray(nestedArray)); // [1, 2, 3, 4, 5, 6]
