@@ -20,7 +20,7 @@ clone3.age = 29;
 
 //сравнить объекты
 const compareObjects = JSON.stringify(obj1) === JSON.stringify(clone2);
-console.log(compareObjects);
+// console.log(compareObjects);
 
 // проход по массиву
 for (const key in clone1) {
@@ -31,11 +31,26 @@ for (const key in clone1) {
 const keys = Object.keys(clone1);
 const values = Object.values(clone1);
 const entries = Object.entries(clone1);
-console.log(keys);
-console.log(values);
-console.log(entries);
+// console.log(keys);
+// console.log(values);
+// console.log(entries);
 
 keys.forEach((key) => {
   const value = clone1[key as keyof typeof clone1];
-  console.log(key, value);
+  // console.log(key, value);
 });
+
+// удаление свойства из объекта
+//only optionals value might be deleted
+interface IObj2 {
+  name?: string;
+  surname: string;
+  age?: number;
+}
+
+let obj2: IObj2 = {
+  name: "Anton",
+  surname: "Oshurek",
+};
+delete obj2.name;
+console.log(obj2);
