@@ -108,4 +108,9 @@ const flattenArray = <T>(arr: T[]): (T | undefined)[] => {
   return result;
 };
 const nestedArray = [1, [2, [3, 4], 5], 6];
-console.log(flattenArray(nestedArray)); // [1, 2, 3, 4, 5, 6]
+// console.log(flattenArray(nestedArray)); // [1, 2, 3, 4, 5, 6]
+
+// удаление повторяющихся значений из массива
+let array = [1, 2, 3, 4, 1, 2, 5];
+let uniqueArray = [...new Set(array)];
+console.log(uniqueArray);
