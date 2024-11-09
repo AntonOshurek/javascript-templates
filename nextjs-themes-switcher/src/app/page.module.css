@@ -1,0 +1,18 @@
+.wrap {
+  min-height: 100vh;
+  background-color: var(--background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  border: 1px solid #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.text {
+  color: var(--foreground);
+  font-family: var(--basic-font);
+}
