@@ -8,13 +8,15 @@ interface PageParams {
 }
 
 export default async function Home({ params }: { params: PageParams }) {
-  const { lang } = params;
+  const { lang } = await params;
+
   const dict = await getDictionary(lang);
+
   return (
     <div>
       <h1>{dict.homepage.title}</h1>
       <p>{dict.homepage.content}</p>
-      <Link href={`${lang}/inner-page`}>{dict.homepage.linkText}</Link>
+      <Link href={`/inner-page`}>{dict.homepage.linkText}</Link>
 
       <LocaleSwitcher />
     </div>
