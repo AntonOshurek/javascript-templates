@@ -1,0 +1,26 @@
+.search-bar {
+	
+}
+
+.search-bar--focus {
+	z-index: 5;
+}
+
+.search-bar--focus .search-bar__input {
+	box-shadow: 2 2 8px rgba(52, 59, 67, 0.5);
+}
+
+.search-bar__input {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 12px;
+	background-color: #3b3b3b;
+	color: #c1c1c1;
+	transition: 0.2s all ease;
+}
+
+.search-bar__input:hover,
+.search-bar__input:focus {
+	background-color: #545454;
+	color: #ececec;
+}
