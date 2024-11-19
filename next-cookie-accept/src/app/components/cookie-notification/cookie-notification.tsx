@@ -1,6 +1,8 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
+//LIBS
 import Cookies from "js-cookie";
 //STYLES
 import style from "./cookie-notification.module.css";
@@ -10,9 +12,8 @@ export default function CookieNotification(): JSX.Element | null {
 
   useEffect(() => {
     const consent = Cookies.get("cookie_consent");
-    if (consent === "true") {
-      setIsConsentGiven(true);
-    } else {
+
+    if (consent !== "true") {
       setIsConsentGiven(false);
     }
   }, []);
@@ -38,25 +39,19 @@ export default function CookieNotification(): JSX.Element | null {
           />
 
           <p className={style["cookie-notification__info"]}>
-            We use cookies to personalize your site experience and analyze the
-            site traffic.
+            We use cookies solely to ensure the proper functioning of the
+            website. We do not collect or process any personal data. By
+            continuing to use the site, you agree to our use of technical
+            cookies.
           </p>
 
-          <div className={style["cookie-notification__controls"]}>
-            <button
-              className={style["cookie-notification__button"]}
-              type="button"
-            >
-              Decline
-            </button>
-            <button
-              className={`${style["cookie-notification__button"]} ${style["cookie-notification__button--accept"]}`}
-              type="button"
-              onClick={handleAccept}
-            >
-              Accept
-            </button>
-          </div>
+          <button
+            className={`${style["cookie-notification__button"]} ${style["cookie-notification__button--accept"]}`}
+            type="button"
+            onClick={handleAccept}
+          >
+            Accept
+          </button>
         </div>
       )}
     </>
