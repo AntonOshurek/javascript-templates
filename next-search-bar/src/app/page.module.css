@@ -1,0 +1,13 @@
+.page {
+  min-height: 100vh;
+  background-color: #222222;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  position: relative;
+  background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.linuxfoundation.jp%2Fwp-content%2Fuploads%2F2016%2F12%2Fabstract_bg.jpg&f=1&nofb=1&ipt=eed8975e24ee9e3fa2e86478041b90203b6cba2de3f71a40638d451dd639d264&ipo=images);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
