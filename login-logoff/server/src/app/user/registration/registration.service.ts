@@ -43,11 +43,17 @@ export class RegistrationService {
     const createdUser: User = await this.userService.create(
       userDtoWithHashedPassword,
     );
+
     const token = await this.jwtUtilsService.getToken({
       email: createdUser.email,
       username: createdUser.userName,
     });
 
-    return { ...createdUser, access_token: token.access_token };
+    const response = {
+      ...createdUser,
+      access_token: token.access_token,
+    };
+
+    return response;
   }
 }

@@ -10,16 +10,16 @@ import {
 import { Response } from 'express';
 //SERVICES
 import { RegistrationService } from './registration.service';
+import { CookieService } from 'src/security/utils/cookie/cookie.service';
 //DTO
 import { CreateRegistrationDto } from './dto/create-registration.dto';
 import { ResponseRegistrationDto } from './dto/response-registration.dto';
-import { ConfigService } from '@nestjs/config';
 
 @Controller('registration')
 export class RegistrationController {
   constructor(
     private readonly registrationService: RegistrationService,
-    private readonly configService: ConfigService,
+    private readonly cookieService: CookieService,
   ) {}
 
   @Post()
@@ -33,11 +33,7 @@ export class RegistrationController {
       createRegistrationDto,
     );
 
-    res.cookie('access_token', registredUser.access_token, {
-      httpOnly: true,
-      secure: this.configService.get<string>('NODE_ENV') === 'production',
-      maxAge: 3600000,
-    });
+    this.cookieService.setAuthCookie(res, registredUser.access_token);
 
     return registredUser;
   }
