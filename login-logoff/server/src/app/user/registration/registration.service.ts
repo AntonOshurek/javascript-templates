@@ -19,11 +19,12 @@ export class RegistrationService {
   ) {}
 
   async create(createRegistrationDto): Promise<ResponseRegistrationDto> {
-    const isEmailAlredyIsset = await this.userQueryService.isUserExistByEmail(
-      createRegistrationDto.email,
-    );
+    const isEmailAlredyIsset: boolean =
+      await this.userQueryService.isUserExistByEmail(
+        createRegistrationDto.email,
+      );
 
-    if (isEmailAlredyIsset !== null) {
+    if (isEmailAlredyIsset) {
       throw new HttpException(
         'User with this email alredy exist',
         HttpStatus.CONFLICT,
@@ -42,7 +43,6 @@ export class RegistrationService {
     const createdUser: User = await this.userService.create(
       userDtoWithHashedPassword,
     );
-
     const token = await this.jwtUtilsService.getToken({
       email: createdUser.email,
       username: createdUser.userName,
