@@ -1,23 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 //SERVICES
-import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
+import { JwtUtilsService } from 'src/security/utils/jwt-utils/jwt-utils.service';
+import { CryptoUtilsService } from 'src/security/utils/crypto-utils/crypto-utils.service';
 //DTO
 import { ResponseRegistrationDto } from './dto/response-registration.dto';
-//CRYPTO
-import { genSaltSync, hash } from 'bcrypt';
 //ENTITYES
 import { User } from '../user/entities/user.entity';
+import { UserQueryService } from '../user/user-query.service';
 
 @Injectable()
 export class RegistrationService {
   constructor(
+    private readonly userQueryService: UserQueryService,
     private readonly userService: UserService,
-    private readonly jwtService: JwtService,
+    private readonly jwtUtilsService: JwtUtilsService,
+    private readonly cryptoUtilsService: CryptoUtilsService,
   ) {}
 
   async create(createRegistrationDto): Promise<ResponseRegistrationDto> {
-    const passwordHash = await this.generateHash(
+    const isEmailAlredyIsset = await this.userQueryService.isUserExistByEmail(
+      createRegistrationDto.email,
+    );
+
+    if (isEmailAlredyIsset !== null) {
+      throw new HttpException(
+        'User with this email alredy exist',
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    const passwordHash = await this.cryptoUtilsService.generateHash(
       createRegistrationDto.password,
     );
 
@@ -30,18 +43,11 @@ export class RegistrationService {
       userDtoWithHashedPassword,
     );
 
-    const token = await this.jwtService.signAsync({
+    const token = await this.jwtUtilsService.getToken({
       email: createdUser.email,
       username: createdUser.userName,
     });
 
-    return { ...createdUser, access_token: token };
-  }
-
-  async generateHash(password: string): Promise<string> {
-    const salt = genSaltSync(10);
-    const hashpass = await hash(password, salt);
-
-    return hashpass;
+    return { ...createdUser, access_token: token.access_token };
   }
 }
