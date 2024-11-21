@@ -1,21 +1,12 @@
-"server only";
-// import axios from "axios";
+"use server";
 import type { PuplarMovies } from "../types";
 import chalk from "chalk";
-
-// const tmdbApi = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_TMDB_BASE_URL,
-//   params: {
-//     api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY,
-//     language: "ru",
-//   },
-// });
 
 export const fetchPopularMovies = async (page = 1): Promise<PuplarMovies> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=pl&page=${page}`,
     {
-      next: { revalidate: 2000 },
+      next: { revalidate: 20 },
     }
   );
 
@@ -23,8 +14,8 @@ export const fetchPopularMovies = async (page = 1): Promise<PuplarMovies> => {
     throw new Error("Ошибка при получении популярных фильмов");
   }
 
-  const timestamp = new Date().toISOString(); // Текущее время в формате ISO
-  const requestType = "GET"; // Тип запроса (можно динамически менять)
+  const timestamp = new Date().toISOString();
+  const requestType = "GET";
 
   console.log(
     chalk.bgBlue.white(
@@ -34,10 +25,4 @@ export const fetchPopularMovies = async (page = 1): Promise<PuplarMovies> => {
 
   const data = await res.json();
   return data as PuplarMovies;
-
-  // console.log("fetch popular films");
-  // const response = await tmdbApi.get("/movie/popular", {
-  //   params: { page, language: "pl" },
-  // });
-  // return response.data;
 };
