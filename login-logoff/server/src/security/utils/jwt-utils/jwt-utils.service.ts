@@ -1,16 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import type { IGetTokenReturnData, ITokenPayload } from './model';
+import type { Tokens, GetTokenPayload } from './model';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtUtilsService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+  ) {}
 
-  async getToken(tokenPayload: ITokenPayload): Promise<IGetTokenReturnData> {
-    const token = await this.jwtService.signAsync(tokenPayload);
+  async getTokens(tokenPayload: GetTokenPayload): Promise<Tokens> {
+    const token = await this.jwtService.signAsync(tokenPayload, {
+      expiresIn: Number(this.configService.get<string>('TOKEN_TTL')),
+    });
+
+    const refreshToken = await this.jwtService.signAsync(
+      { email: tokenPayload.email },
+      {
+        expiresIn: Number(this.configService.get<string>('REFRESH_TOKEN_TTL')),
+      },
+    );
 
     return {
       access_token: token,
+      refresh_token: refreshToken,
     };
   }
 }

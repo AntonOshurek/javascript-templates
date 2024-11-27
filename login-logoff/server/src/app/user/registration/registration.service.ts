@@ -8,6 +8,7 @@ import { ResponseRegistrationDto } from './dto/response-registration.dto';
 //ENTITYES
 import { User } from '../user/entities/user.entity';
 import { UserQueryService } from '../user/user-query.service';
+import { Tokens } from 'src/security/utils/jwt-utils/model';
 
 @Injectable()
 export class RegistrationService {
@@ -44,14 +45,14 @@ export class RegistrationService {
       userDtoWithHashedPassword,
     );
 
-    const token = await this.jwtUtilsService.getToken({
+    const tokens: Tokens = await this.jwtUtilsService.getTokens({
       email: createdUser.email,
       username: createdUser.userName,
     });
 
-    const response = {
-      ...createdUser,
-      access_token: token.access_token,
+    const response: ResponseRegistrationDto = {
+      user: createdUser,
+      tokens,
     };
 
     return response;
