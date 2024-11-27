@@ -33,7 +33,11 @@ export class RegistrationController {
       createRegistrationDto,
     );
 
-    this.cookieService.setAuthCookie(res, registredUser.access_token);
+    this.cookieService.setAuthCookie(
+      res,
+      registredUser.tokens.access_token,
+      registredUser.tokens.refresh_token,
+    );
 
     return registredUser;
   }

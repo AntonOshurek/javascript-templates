@@ -9,10 +9,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const secret = configService.get<string>('SECRET');
+        const secret = configService.get<string>('JWT_SECRET');
+
         return {
           secret: secret,
-          signOptions: { expiresIn: '60m', algorithm: 'HS256' },
+          signOptions: { algorithm: 'HS256' },
           audience: '',
           issuer: '',
         };
