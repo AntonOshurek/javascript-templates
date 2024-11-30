@@ -1,10 +1,15 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 //DB
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 //DTO
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 //ENTITYES
 import { User, UserDocument } from './entities/user.entity';
 
@@ -29,20 +34,16 @@ export class UserService {
     return savedUser.toObject();
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
+  async getMyUserData(userid: string): Promise<User> {
+    try {
+      const user = await this.userModel.findById(userid);
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    console.log(updateUserDto);
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+      if (!user) {
+        throw new NotFoundException(`User with ID ${userid} not found`);
+      }
+      return user;
+    } catch {
+      throw new InternalServerErrorException('Failed to fetch user by id');
+    }
   }
 }

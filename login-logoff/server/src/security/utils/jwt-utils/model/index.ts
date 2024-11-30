@@ -1,4 +1,4 @@
-export interface GetTokenPayload {
+export interface TokenPayload {
   userId: string;
 }
 
