@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 //utils
 import { AccountModule } from './account/account.module';
+import { CatalogModule } from './catalog/catalog.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AccountModule } from './account/account.module';
       inject: [ConfigService],
     }),
     AccountModule,
+    CatalogModule,
   ],
   controllers: [],
 })
