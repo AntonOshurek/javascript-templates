@@ -16,7 +16,7 @@ export class JwtUtilsService {
     });
 
     const refreshToken = await this.jwtService.signAsync(
-      { email: tokenPayload.email },
+      { userid: tokenPayload.userId },
       {
         expiresIn: Number(this.configService.get<string>('REFRESH_TOKEN_TTL')),
       },

@@ -33,8 +33,7 @@ export class LoginService {
     }
 
     const tokens = await this.jwtUtils.getTokens({
-      email: findedUser.email,
-      username: findedUser.userName,
+      userId: findedUser._id.toString(),
     });
 
     return {
