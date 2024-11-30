@@ -1,6 +1,5 @@
-export interface GetTokenPayload {
-  username: string;
-  email: string;
+export interface TokenPayload {
+  userId: string;
 }
 
 export interface Tokens {

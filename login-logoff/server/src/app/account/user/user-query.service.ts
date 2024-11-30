@@ -23,9 +23,9 @@ export class UserQueryService {
   //   return this.userModel.findOne({ _id: id, email }).exec();
   // }
 
-  // async getUserByEmailWithPassword(
-  //   email: string,
-  // ): Promise<UserDocument | null> {
-  //   return this.userModel.findOne({ email }).select('+password').exec();
-  // }
+  async getUserByEmailWithPassword(
+    email: string,
+  ): Promise<UserDocument | null> {
+    return this.userModel.findOne({ email }).select('+password').exec();
+  }
 }

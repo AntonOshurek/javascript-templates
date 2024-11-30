@@ -46,8 +46,7 @@ export class RegistrationService {
     );
 
     const tokens: Tokens = await this.jwtUtilsService.getTokens({
-      email: createdUser.email,
-      username: createdUser.userName,
+      userId: createdUser._id.toString(),
     });
 
     const response: ResponseRegistrationDto = {
